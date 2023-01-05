@@ -1,0 +1,67 @@
+create database software;
+use software
+
+create table user(
+u_id varchar(10) not null primary key,
+u_pw varchar(10) not null);
+
+ 
+create table progress(
+u_id varchar(10) ,
+p_time int not null,
+p_coin double,
+p_tired double,
+p_exp int,
+p_lv int,
+foreign key(u_id) references user(u_id) on delete cascade on update cascade);
+
+
+create table shopping(
+s_name varchar(15) not null,
+s_price int,
+primary key(s_name));
+
+create table save(
+u_id varchar(10),
+pp_time int not null,
+primary key(pp_time,cc_id),
+foreign key(u_id) references user(u_id) on delete cascade on update cascade,
+foreign key(pp_time) references progress(p_time) on update cascade on delete cascade);
+
+
+create table consumption(
+u_id varchar(10) ,
+con_time int not null,
+con_s_name varchar(15) not null,
+primary key(con_time,con_s_name),
+foreign key(u_id) references user(u_id) on delete cascade on update cascade,
+foreign key(con_time) references progress(p_time) on update cascade on delete cascade,
+foreign key(con_s_name) references shopping(s_name) on update cascade on delete cascade
+);
+
+create table mini1rank (
+m1_id varchar(20) not null,
+m1_score int(20) not null,
+primary key(m1_id));
+
+create table mini2rank (
+m2_id varchar(20) not null,
+m2_score int(20) not null,
+primary key(m2_id));
+
+
+create table recovery(
+u_id varchar(10),
+ss_name varchar(15) not null,
+primary key(ss_name),
+foreign key(u_id) references user(u_id) on delete cascade on update cascade,
+foreign key(ss_name) references shopping(s_name) on update cascade on delete cascade
+);
+
+
+insert into user values("yoonji","kang");
+insert into shopping values("밥",1500);
+insert into shopping values("음료",1000);
+insert into shopping values("토익",5000);
+insert into shopping values("정보처리기사",10000);
+
